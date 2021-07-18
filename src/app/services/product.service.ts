@@ -1,20 +1,22 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import {Product} from '../model/product';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { Product } from "../model/product";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ProductService {
-
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>('http://localhost:8080/rest/products');
+    return this.http.get<Product[]>("http://localhost:8080/rest/products");
+  }
+
+  getProductsDetails(id): Observable<Product> {
+    return this.http.get<Product>(`http://localhost:8080/rest/products/${id}`);
   }
 
   isTheLast(product: Product): boolean {
@@ -28,5 +30,7 @@ export class ProductService {
   decreaseStock(product: Product) {
     product.stock -= 1;
   }
-
+  isFinished(product: Product): boolean {
+    return product.stock === 0;
+  }
 }

@@ -1,36 +1,42 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule, LOCALE_ID } from "@angular/core";
 
-import { AppComponent } from './app.component';
-import { ProductComponent } from './product/product.component';
-import { MenuComponent } from './menu/menu.component';
-import { SortPipe } from './pipes/sort.pipe';
-import { registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
-import {HttpClientModule} from '@angular/common/http';
-import { HomeComponent } from './home/home.component';
-import { BasketComponent } from './basket/basket.component';
-import {RouterModule, Routes} from '@angular/router';
-import {EmptyBasketGuard} from './empty-basket.guard';
-import {FormsModule} from '@angular/forms';
+import { AppComponent } from "./app.component";
+import { ProductComponent } from "./product/product.component";
+import { MenuComponent } from "./menu/menu.component";
+import { SortPipe } from "./pipes/sort.pipe";
+import { registerLocaleData } from "@angular/common";
+import localeFr from "@angular/common/locales/fr";
+import { HttpClientModule } from "@angular/common/http";
+import { HomeComponent } from "./home/home.component";
+import { BasketComponent } from "./basket/basket.component";
+import { RouterModule, Routes } from "@angular/router";
+import { EmptyBasketGuard } from "./empty-basket.guard";
+import { FormsModule } from "@angular/forms";
+import { ProductDetailsComponent } from "./product-details/product-details.component";
 
 registerLocaleData(localeFr);
 
 const routes: Routes = [
   {
-    path: 'home',
-    component: HomeComponent
+    path: "product/:id",
+    component: ProductDetailsComponent,
+  },
+
+  {
+    path: "home",
+    component: HomeComponent,
   },
   {
-    path: 'basket',
+    path: "basket",
     component: BasketComponent,
-    canActivate: [EmptyBasketGuard]
+    canActivate: [EmptyBasketGuard],
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  }
+    path: "",
+    redirectTo: "home",
+    pathMatch: "full",
+  },
 ];
 
 @NgModule({
@@ -40,18 +46,19 @@ const routes: Routes = [
     MenuComponent,
     SortPipe,
     HomeComponent,
-    BasketComponent
+    BasketComponent,
+    ProductDetailsComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    FormsModule
+    FormsModule,
   ],
   providers: [
-    {provide: 'welcomeMsg', useValue: 'Welcome to Zenika Ecommerces'},
-    {provide: LOCALE_ID, useValue: navigator.language}
+    { provide: "welcomeMsg", useValue: "Welcome to Zenika Ecommerces" },
+    { provide: LOCALE_ID, useValue: navigator.language },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
